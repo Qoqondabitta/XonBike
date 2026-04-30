@@ -1,55 +1,49 @@
 import React from 'react';
+import { useLang } from '../../i18n/LanguageContext';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 import './Fleet.css';
 
-/* EDITABLE: Update bike data here */
 const BIKES = [
   {
     id: 1,
-    name: 'VoltRide Pro X1',
-    tag: 'Most Popular',
-    /* EDITABLE: Replace image URL */
+    name: 'XonBike Pro X1',
+    tagKey: 'mostPopular',
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
-    specs: [
-      { icon: '🔋', label: 'Battery Range', value: '80 km' },
-      { icon: '⚡', label: 'Max Speed',     value: '25 km/h' },
-      { icon: '🏔️', label: 'Suspension',   value: 'Front Fork' },
-      { icon: '🪑', label: 'Seat',          value: 'Ergonomic Comfort' },
-      { icon: '📱', label: 'USB Charging',  value: 'Built-in Port' },
-    ],
+    specKeys: ['batteryRange', 'maxSpeed', 'suspension', 'seat', 'usbCharging'],
+    specIcons: ['🔋', '⚡', '🏔️', '🪑', '📱'],
+    specValues: ['80 km', '25 km/h', 'Front Fork', 'Ergonomic Comfort', 'Built-in Port'],
     price: 185,
   },
   {
     id: 2,
-    name: 'VoltRide Urban S2',
-    tag: 'City Cruiser',
+    name: 'XonBike Urban S2',
+    tagKey: 'cityCruiser',
     image: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80',
-    specs: [
-      { icon: '🔋', label: 'Battery Range', value: '65 km' },
-      { icon: '⚡', label: 'Max Speed',     value: '25 km/h' },
-      { icon: '🏔️', label: 'Suspension',   value: 'Dual Comfort' },
-      { icon: '🪑', label: 'Seat',          value: 'Wide Cushion' },
-      { icon: '📱', label: 'USB Charging',  value: 'Built-in Port' },
-    ],
+    specKeys: ['batteryRange', 'maxSpeed', 'suspension', 'seat', 'usbCharging'],
+    specIcons: ['🔋', '⚡', '🏔️', '🪑', '📱'],
+    specValues: ['65 km', '25 km/h', 'Dual Comfort', 'Wide Cushion', 'Built-in Port'],
     price: 185,
   },
   {
     id: 3,
-    name: 'VoltRide Trail T3',
-    tag: 'Adventure Ready',
+    name: 'XonBike Trail T3',
+    tagKey: 'adventureReady',
     image: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94946?w=800&q=80',
-    specs: [
-      { icon: '🔋', label: 'Battery Range', value: '70 km' },
-      { icon: '⚡', label: 'Max Speed',     value: '25 km/h' },
-      { icon: '🏔️', label: 'Suspension',   value: 'Full Suspension' },
-      { icon: '🪑', label: 'Seat',          value: 'Sport Saddle' },
-      { icon: '📱', label: 'USB Charging',  value: 'Built-in Port' },
-    ],
+    specKeys: ['batteryRange', 'maxSpeed', 'suspension', 'seat', 'usbCharging'],
+    specIcons: ['🔋', '⚡', '🏔️', '🪑', '📱'],
+    specValues: ['70 km', '25 km/h', 'Full Suspension', 'Sport Saddle', 'Built-in Port'],
     price: 185,
   },
 ];
 
+const BIKE_TAGS = {
+  mostPopular:   { en: 'Most Popular', pl: 'Najpopularniejszy', ru: 'Самый Популярный', uz: 'Eng Mashhur' },
+  cityCruiser:   { en: 'City Cruiser',  pl: 'Miejski',          ru: 'Городской',         uz: 'Shahar Kreyser' },
+  adventureReady:{ en: 'Courier Ready', pl: 'Kurierski',        ru: 'Для Курьеров',      uz: 'Kuryer Uchun' },
+};
+
 const FleetCard = ({ bike, index }) => {
+  const { t, lang } = useLang();
   const ref = useScrollAnimation({ threshold: 0.08 });
 
   const scrollToBooking = () => {
@@ -64,10 +58,8 @@ const FleetCard = ({ bike, index }) => {
       style={{ transitionDelay: `${index * 100}ms` }}
       aria-label={`${bike.name} e-bike`}
     >
-      {/* Tag */}
-      <div className="fleet-card__tag">{bike.tag}</div>
+      <div className="fleet-card__tag">{BIKE_TAGS[bike.tagKey]?.[lang] ?? BIKE_TAGS[bike.tagKey]?.en}</div>
 
-      {/* Image */}
       <div className="fleet-card__image-wrap">
         <img
           src={bike.image}
@@ -78,16 +70,15 @@ const FleetCard = ({ bike, index }) => {
         <div className="fleet-card__image-overlay" />
       </div>
 
-      {/* Body */}
       <div className="fleet-card__body">
         <h3 className="fleet-card__name">{bike.name}</h3>
 
         <ul className="fleet-card__specs">
-          {bike.specs.map(spec => (
-            <li key={spec.label} className="fleet-card__spec">
-              <span className="fleet-card__spec-icon">{spec.icon}</span>
-              <span className="fleet-card__spec-label">{spec.label}</span>
-              <span className="fleet-card__spec-value">{spec.value}</span>
+          {bike.specKeys.map((key, i) => (
+            <li key={key} className="fleet-card__spec">
+              <span className="fleet-card__spec-icon">{bike.specIcons[i]}</span>
+              <span className="fleet-card__spec-label">{t(`fleet.specs.${key}`)}</span>
+              <span className="fleet-card__spec-value">{bike.specValues[i]}</span>
             </li>
           ))}
         </ul>
@@ -95,10 +86,10 @@ const FleetCard = ({ bike, index }) => {
         <div className="fleet-card__footer">
           <div className="fleet-card__price">
             <span className="fleet-card__price-amount">{bike.price} PLN</span>
-            <span className="fleet-card__price-period">/week</span>
+            <span className="fleet-card__price-period">{t('fleet.perPeriod')}</span>
           </div>
           <button className="fleet-card__btn" onClick={scrollToBooking}>
-            Book This Bike ⚡
+            {t('fleet.bookBike')}
           </button>
         </div>
       </div>
@@ -107,19 +98,18 @@ const FleetCard = ({ bike, index }) => {
 };
 
 const Fleet = () => {
+  const { t } = useLang();
   const headerRef = useScrollAnimation();
 
   return (
     <section className="fleet" id="fleet" aria-label="Our fleet">
       <div className="container">
         <div className="fleet__header fade-up" ref={headerRef}>
-          <span className="section-tag">🚴 Our Fleet</span>
+          <span className="section-tag">{t('fleet.tag')}</span>
           <h2 className="section-title">
-            3 Premium <span className="accent-text">Electric Bikes</span>
+            {t('fleet.title1')} <span className="accent-text">{t('fleet.titleAccent')}</span>
           </h2>
-          <p className="section-subtitle">
-            Each bike is meticulously maintained, fully charged, and ready for your adventure across Poland.
-          </p>
+          <p className="section-subtitle">{t('fleet.subtitle')}</p>
         </div>
 
         <div className="fleet__grid">

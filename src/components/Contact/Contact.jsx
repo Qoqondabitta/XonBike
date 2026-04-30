@@ -1,59 +1,58 @@
 import React from 'react';
+import { useLang } from '../../i18n/LanguageContext';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 import './Contact.css';
 
-/* EDITABLE: Update all contact details below */
-const CONTACT_INFO = [
-  {
-    icon: '💬',
-    title: 'WhatsApp',
-    value: '+48 000 000 000',
-    sub: 'Reply within 30 min',
-    href: 'https://wa.me/48000000000?text=Hello%2C%20I%27d%20like%20to%20rent%20an%20e-bike.',
-    color: '#25D366',
-  },
-  {
-    icon: '📞',
-    title: 'Phone',
-    value: '+48 000 000 000',
-    sub: 'Mon – Sun, 8am – 8pm',
-    href: 'tel:+48000000000',
-    color: '#3b82f6',
-  },
-  {
-    icon: '📧',
-    title: 'Email',
-    value: 'hello@voltride.pl',
-    sub: 'We reply within 2 hours',
-    href: 'mailto:hello@voltride.pl',
-    color: '#f59e0b',
-  },
-  {
-    icon: '📍',
-    title: 'Location',
-    value: 'Poland',
-    sub: 'Pickup location shared on booking',
-    href: 'https://maps.google.com/?q=Poland',
-    color: '#ef4444',
-  },
-];
-
 const Contact = () => {
+  const { t } = useLang();
   const headerRef = useScrollAnimation();
   const gridRef   = useScrollAnimation({ threshold: 0.05 });
   const mapRef    = useScrollAnimation({ threshold: 0.08 });
+
+  const CONTACT_INFO = [
+    {
+      icon: '💬',
+      title: 'WhatsApp',
+      value: '+48 000 000 000',
+      sub: t('contact.whatsappSub'),
+      href: 'https://wa.me/48000000000?text=Hello%2C%20I%27d%20like%20to%20rent%20an%20e-bike.',
+      color: '#25D366',
+    },
+    {
+      icon: '📞',
+      title: 'Phone',
+      value: '+48 000 000 000',
+      sub: t('contact.phoneSub'),
+      href: 'tel:+48000000000',
+      color: '#3b82f6',
+    },
+    {
+      icon: '📧',
+      title: 'Email',
+      value: 'hello@xonbike.pl',
+      sub: t('contact.emailSub'),
+      href: 'mailto:hello@xonbike.pl',
+      color: '#f59e0b',
+    },
+    {
+      icon: '📍',
+      title: 'Location',
+      value: 'Poland',
+      sub: t('contact.locationSub'),
+      href: 'https://maps.google.com/?q=Poland',
+      color: '#ef4444',
+    },
+  ];
 
   return (
     <section className="contact" id="contact" aria-label="Contact information">
       <div className="container">
         <div className="contact__header fade-up" ref={headerRef}>
-          <span className="section-tag">📬 Contact</span>
+          <span className="section-tag">{t('contact.tag')}</span>
           <h2 className="section-title">
-            Get in <span className="accent-text">Touch</span>
+            {t('contact.title')} <span className="accent-text">{t('contact.titleAccent')}</span>
           </h2>
-          <p className="section-subtitle">
-            Have questions? We're here to help. Choose your preferred contact method below.
-          </p>
+          <p className="section-subtitle">{t('contact.subtitle')}</p>
         </div>
 
         <div className="contact__grid stagger fade-up" ref={gridRef}>
@@ -79,21 +78,19 @@ const Contact = () => {
           ))}
         </div>
 
-        {/* Map placeholder */}
         <div className="contact__map fade-up" ref={mapRef} aria-label="Map placeholder">
           <div className="contact__map-placeholder">
-            {/* EDITABLE: Replace with real Google Maps embed iframe */}
             <div className="contact__map-overlay">
               <div className="contact__map-pin">📍</div>
-              <p className="contact__map-label">Poland</p>
-              <p className="contact__map-sub">Exact pickup location shared upon booking confirmation</p>
+              <p className="contact__map-label">{t('contact.mapLabel')}</p>
+              <p className="contact__map-sub">{t('contact.mapSub')}</p>
               <a
                 href="https://maps.google.com/?q=Poland"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact__map-btn"
               >
-                Open in Google Maps →
+                {t('contact.openMaps')}
               </a>
             </div>
           </div>

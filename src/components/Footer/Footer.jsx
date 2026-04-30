@@ -1,16 +1,6 @@
 import React from 'react';
+import { useLang } from '../../i18n/LanguageContext';
 import './Footer.css';
-
-/* EDITABLE: Update footer content */
-const QUICK_LINKS = [
-  { label: 'Home',     id: 'hero' },
-  { label: 'Our Bikes', id: 'fleet' },
-  { label: 'Pricing',  id: 'pricing' },
-  { label: 'Book Now', id: 'booking' },
-  { label: 'Reviews',  id: 'reviews' },
-  { label: 'FAQ',      id: 'faq' },
-  { label: 'Contact',  id: 'contact' },
-];
 
 const SOCIAL_LINKS = [
   {
@@ -52,12 +42,24 @@ const SOCIAL_LINKS = [
 ];
 
 const Footer = () => {
+  const { t } = useLang();
+
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
   };
 
   const currentYear = new Date().getFullYear();
+
+  const QUICK_LINKS = [
+    { label: t('footer.links.home'),     id: 'hero' },
+    { label: t('footer.links.bikes'),    id: 'fleet' },
+    { label: t('footer.links.pricing'),  id: 'pricing' },
+    { label: t('footer.links.bookNow'),  id: 'booking' },
+    { label: t('footer.links.reviews'),  id: 'reviews' },
+    { label: t('footer.links.faq'),      id: 'faq' },
+    { label: t('footer.links.contact'),  id: 'contact' },
+  ];
 
   return (
     <footer className="footer" aria-label="Site footer">
@@ -68,12 +70,10 @@ const Footer = () => {
             <button className="footer__logo" onClick={() => scrollTo('hero')}>
               <span className="footer__logo-icon">⚡</span>
               <span className="footer__logo-text">
-                <span className="footer__logo-brand">VOLT</span>RIDE
+                <span className="footer__logo-brand">Xon</span>Bike
               </span>
             </button>
-            <p className="footer__tagline">
-              Premium electric bike rentals in Poland. Explore more, stress less.
-            </p>
+            <p className="footer__tagline">{t('footer.tagline')}</p>
             <div className="footer__socials">
               {SOCIAL_LINKS.map(({ label, icon, href }) => (
                 <a
@@ -92,7 +92,7 @@ const Footer = () => {
 
           {/* Quick links */}
           <div className="footer__col">
-            <h3 className="footer__col-title">Quick Links</h3>
+            <h3 className="footer__col-title">{t('footer.quickLinks')}</h3>
             <ul className="footer__links">
               {QUICK_LINKS.map(({ label, id }) => (
                 <li key={id}>
@@ -106,17 +106,16 @@ const Footer = () => {
 
           {/* Contact */}
           <div className="footer__col">
-            <h3 className="footer__col-title">Contact</h3>
+            <h3 className="footer__col-title">{t('footer.contactTitle')}</h3>
             <div className="footer__contact">
-              {/* EDITABLE: Replace contact details */}
               <a href="https://wa.me/48000000000" className="footer__contact-item" target="_blank" rel="noopener noreferrer">
                 <span>💬</span> WhatsApp: +48 000 000 000
               </a>
               <a href="tel:+48000000000" className="footer__contact-item">
                 <span>📞</span> +48 000 000 000
               </a>
-              <a href="mailto:hello@voltride.pl" className="footer__contact-item">
-                <span>📧</span> hello@voltride.pl
+              <a href="mailto:hello@xonbike.pl" className="footer__contact-item">
+                <span>📧</span> hello@xonbike.pl
               </a>
               <div className="footer__contact-item">
                 <span>📍</span> Poland
@@ -126,19 +125,19 @@ const Footer = () => {
 
           {/* Hours */}
           <div className="footer__col">
-            <h3 className="footer__col-title">Hours</h3>
+            <h3 className="footer__col-title">{t('footer.hoursTitle')}</h3>
             <div className="footer__hours">
               <div className="footer__hours-row">
-                <span>Monday – Friday</span>
+                <span>{t('footer.monFri')}</span>
                 <span>8:00 – 20:00</span>
               </div>
               <div className="footer__hours-row">
-                <span>Saturday – Sunday</span>
+                <span>{t('footer.satSun')}</span>
                 <span>9:00 – 18:00</span>
               </div>
               <div className="footer__hours-badge">
                 <span className="footer__hours-dot" />
-                Available on WhatsApp
+                {t('footer.availableWhatsApp')}
               </div>
             </div>
           </div>
@@ -147,8 +146,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="footer__bottom">
           <p className="footer__copy">
-            © {currentYear} VoltRide. All rights reserved.
-            {/* EDITABLE: Update business name */}
+            {t('footer.copyright').replace('{year}', currentYear)}
           </p>
           <div className="footer__badges">
             <span className="footer__badge">🇵🇱 Poland</span>

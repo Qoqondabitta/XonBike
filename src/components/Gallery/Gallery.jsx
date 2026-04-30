@@ -1,51 +1,22 @@
 import React, { useState } from 'react';
+import { useLang } from '../../i18n/LanguageContext';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 import './Gallery.css';
 
-/* EDITABLE: Replace image URLs and alt text with your own photos */
 const GALLERY_ITEMS = [
-  {
-    id: 1,
-    src: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80',
-    alt: 'Premium electric bike on Poland road',
-    span: 'wide',
-  },
-  {
-    id: 2,
-    src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
-    alt: 'Electric bike close-up',
-    span: 'normal',
-  },
-  {
-    id: 3,
-    src: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80',
-    alt: 'Cyclist on a scenic road in Poland',
-    span: 'normal',
-  },
-  {
-    id: 4,
-    src: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80',
-    alt: 'Happy cyclist exploring the city',
-    span: 'normal',
-  },
-  {
-    id: 5,
-    src: 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=800&q=80',
-    alt: 'Beautiful Poland city street',
-    span: 'wide',
-  },
-  {
-    id: 6,
-    src: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94946?w=800&q=80',
-    alt: 'E-bike adventure trail',
-    span: 'normal',
-  },
+  { id: 1, src: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=800&q=80', alt: 'Premium electric bike on Poland road', span: 'wide' },
+  { id: 2, src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',    alt: 'Electric bike close-up',             span: 'normal' },
+  { id: 3, src: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=800&q=80', alt: 'Cyclist on a scenic road in Poland',  span: 'normal' },
+  { id: 4, src: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&q=80', alt: 'Happy cyclist exploring the city',    span: 'normal' },
+  { id: 5, src: 'https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=800&q=80', alt: 'Beautiful Poland city street',        span: 'wide' },
+  { id: 6, src: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94946?w=800&q=80', alt: 'E-bike adventure trail',              span: 'normal' },
 ];
 
 const Gallery = () => {
+  const { t } = useLang();
   const [lightbox, setLightbox] = useState(null);
-  const headerRef  = useScrollAnimation();
-  const gridRef    = useScrollAnimation({ threshold: 0.05 });
+  const headerRef = useScrollAnimation();
+  const gridRef   = useScrollAnimation({ threshold: 0.05 });
 
   const openLightbox  = (item) => setLightbox(item);
   const closeLightbox = () => setLightbox(null);
@@ -54,13 +25,11 @@ const Gallery = () => {
     <section className="gallery" id="gallery" aria-label="Photo gallery">
       <div className="container">
         <div className="gallery__header fade-up" ref={headerRef}>
-          <span className="section-tag">📸 Gallery</span>
+          <span className="section-tag">{t('gallery.tag')}</span>
           <h2 className="section-title">
-            Experience the <span className="accent-text">Ride</span>
+            {t('gallery.title')} <span className="accent-text">{t('gallery.titleAccent')}</span>
           </h2>
-          <p className="section-subtitle">
-            See our premium fleet and the beautiful routes waiting to be explored in Poland.
-          </p>
+          <p className="section-subtitle">{t('gallery.subtitle')}</p>
         </div>
 
         <div className="gallery__grid stagger fade-up" ref={gridRef}>
@@ -83,7 +52,6 @@ const Gallery = () => {
         </div>
       </div>
 
-      {/* Lightbox */}
       {lightbox && (
         <div
           className="gallery-lightbox"

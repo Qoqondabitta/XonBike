@@ -9,8 +9,6 @@ const LANGUAGES = [
   { code: 'uz', label: 'UZ' },
 ];
 
-const NAV_IDS = ['hero', 'fleet', 'pricing', 'reviews', 'faq', 'contact'];
-
 const Navbar = () => {
   const { t, lang, setLang } = useLang();
   const [scrolled, setScrolled] = useState(false);

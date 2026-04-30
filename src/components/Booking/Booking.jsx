@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLang } from '../../i18n/LanguageContext';
 import useScrollAnimation from '../../hooks/useScrollAnimation';
 import './Booking.css';
 
@@ -6,30 +7,14 @@ const INITIAL_FORM = {
   name: '',
   phone: '',
   email: '',
+  platform: '',
   startDate: '',
-  duration: '1',
-  bike: '',
-  pickupTime: '',
+  duration: '',
   message: '',
 };
 
-/* EDITABLE: Update bike names to match your fleet */
-const BIKE_OPTIONS = [
-  { value: '',         label: 'Select a bike...' },
-  { value: 'ProX1',   label: 'VoltRide Pro X1' },
-  { value: 'UrbanS2', label: 'VoltRide Urban S2' },
-  { value: 'TrailT3', label: 'VoltRide Trail T3' },
-  { value: 'any',     label: 'Any available bike' },
-];
-
-const DURATION_OPTIONS = [
-  { value: '1', label: '1 Day — 185 PLN' },
-  { value: '3', label: '3 Days — 520 PLN' },
-  { value: '7', label: '7 Days — 1,150 PLN' },
-  { value: 'custom', label: 'Custom duration' },
-];
-
 const Booking = () => {
+  const { t } = useLang();
   const [form,        setForm]        = useState(INITIAL_FORM);
   const [errors,      setErrors]      = useState({});
   const [submitting,  setSubmitting]  = useState(false);
@@ -42,13 +27,13 @@ const Booking = () => {
 
   const validate = () => {
     const e = {};
-    if (!form.name.trim())      e.name      = 'Full name is required';
-    if (!form.phone.trim())     e.phone     = 'Phone / WhatsApp is required';
-    if (!form.email.trim())     e.email     = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Enter a valid email';
-    if (!form.startDate)        e.startDate = 'Start date is required';
-    if (!form.bike)             e.bike      = 'Please select a bike';
-    if (!form.pickupTime)       e.pickupTime = 'Pickup time is required';
+    if (!form.name.trim())     e.name     = t('booking.errors.name');
+    if (!form.phone.trim())    e.phone    = t('booking.errors.phone');
+    if (!form.email.trim())    e.email    = t('booking.errors.email');
+    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = t('booking.errors.emailInvalid');
+    if (!form.platform)        e.platform = t('booking.errors.platform');
+    if (!form.startDate)       e.startDate = t('booking.errors.startDate');
+    if (!form.duration)        e.duration  = t('booking.errors.duration');
     return e;
   };
 
@@ -64,7 +49,6 @@ const Booking = () => {
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
     setSubmitting(true);
-    // Simulate API call — replace with real submission logic
     setTimeout(() => {
       setSubmitting(false);
       setShowSuccess(true);
@@ -73,7 +57,29 @@ const Booking = () => {
     }, 1400);
   };
 
-  const getTodayMin = () => today;
+  const PERKS = [
+    { icon: '⚡', text: t('booking.perks.fastApproval') },
+    { icon: '🔋', text: t('booking.perks.chargerIncluded') },
+    { icon: '💬', text: t('booking.perks.whatsappSupport') },
+    { icon: '🛠', text: t('booking.perks.maintainedBikes') },
+    { icon: '🚴', text: t('booking.perks.courierReady') },
+  ];
+
+  const PLATFORM_OPTIONS = [
+    { value: '',         label: t('booking.placeholders.selectPlatform') },
+    { value: 'UberEats', label: t('booking.platforms.uberEats') },
+    { value: 'Glovo',    label: t('booking.platforms.glovo') },
+    { value: 'Wolt',     label: t('booking.platforms.wolt') },
+    { value: 'Bolt',     label: t('booking.platforms.bolt') },
+    { value: 'Other',    label: t('booking.platforms.other') },
+  ];
+
+  const DURATION_OPTIONS = [
+    { value: '',      label: t('booking.placeholders.selectDuration') },
+    { value: 'week1', label: t('booking.durations.week1') },
+    { value: 'week2', label: t('booking.durations.week2') },
+    { value: 'month1',label: t('booking.durations.month1') },
+  ];
 
   return (
     <section className="booking" id="booking" aria-label="Book your e-bike">
@@ -83,15 +89,11 @@ const Booking = () => {
           <div className="booking-modal__backdrop" onClick={() => setShowSuccess(false)} />
           <div className="booking-modal__box">
             <div className="booking-modal__icon">✅</div>
-            <h3 className="booking-modal__title">Booking Received!</h3>
-            <p className="booking-modal__text">
-              Thank you! We will contact you shortly via WhatsApp or email to confirm your reservation.
-            </p>
-            <div className="booking-modal__sub">
-              Expected response: within 30 minutes
-            </div>
+            <h3 className="booking-modal__title">{t('booking.successTitle')}</h3>
+            <p className="booking-modal__text">{t('booking.successText')}</p>
+            <div className="booking-modal__sub">{t('booking.successSub')}</div>
             <button className="booking-modal__btn" onClick={() => setShowSuccess(false)}>
-              Close
+              {t('booking.successClose')}
             </button>
           </div>
         </div>
@@ -101,22 +103,14 @@ const Booking = () => {
         <div className="booking__inner">
           {/* Left — copy */}
           <div className="booking__left fade-up" ref={headerRef}>
-            <span className="section-tag">📋 Book Now</span>
+            <span className="section-tag">{t('booking.tag')}</span>
             <h2 className="section-title">
-              Reserve Your <span className="accent-text">E-Bike</span>
+              {t('booking.title')} <span className="accent-text">{t('booking.titleAccent')}</span>
             </h2>
-            <p className="section-subtitle">
-              Fill in the form and we'll confirm your booking within 30 minutes via WhatsApp or email.
-            </p>
+            <p className="section-subtitle">{t('booking.subtitle')}</p>
 
             <div className="booking__perks">
-              {[
-                { icon: '⚡', text: 'Instant confirmation' },
-                { icon: '🔒', text: 'No deposit required' },
-                { icon: '🪖', text: 'Helmet included free' },
-                { icon: '🔋', text: 'Charger included free' },
-                { icon: '💬', text: 'WhatsApp support' },
-              ].map(p => (
+              {PERKS.map(p => (
                 <div className="booking__perk" key={p.text}>
                   <span className="booking__perk-icon">{p.icon}</span>
                   <span>{p.text}</span>
@@ -136,13 +130,13 @@ const Booking = () => {
             <div className="booking__form-grid">
               {/* Full Name */}
               <div className={`booking__field${errors.name ? ' booking__field--error' : ''}`}>
-                <label className="booking__label" htmlFor="name">Full Name *</label>
+                <label className="booking__label" htmlFor="name">{t('booking.labels.fullName')}</label>
                 <input
                   id="name"
                   name="name"
                   type="text"
                   className="booking__input"
-                  placeholder="Jan Kowalski"
+                  placeholder={t('booking.placeholders.fullName')}
                   value={form.name}
                   onChange={handleChange}
                   autoComplete="name"
@@ -152,13 +146,13 @@ const Booking = () => {
 
               {/* Phone */}
               <div className={`booking__field${errors.phone ? ' booking__field--error' : ''}`}>
-                <label className="booking__label" htmlFor="phone">Phone / WhatsApp *</label>
+                <label className="booking__label" htmlFor="phone">{t('booking.labels.phone')}</label>
                 <input
                   id="phone"
                   name="phone"
                   type="tel"
                   className="booking__input"
-                  placeholder="+48 123 456 789"
+                  placeholder={t('booking.placeholders.phone')}
                   value={form.phone}
                   onChange={handleChange}
                   autoComplete="tel"
@@ -168,13 +162,13 @@ const Booking = () => {
 
               {/* Email */}
               <div className={`booking__field booking__field--full${errors.email ? ' booking__field--error' : ''}`}>
-                <label className="booking__label" htmlFor="email">Email Address *</label>
+                <label className="booking__label" htmlFor="email">{t('booking.labels.email')}</label>
                 <input
                   id="email"
                   name="email"
                   type="email"
                   className="booking__input"
-                  placeholder="jan@example.com"
+                  placeholder={t('booking.placeholders.email')}
                   value={form.email}
                   onChange={handleChange}
                   autoComplete="email"
@@ -182,15 +176,32 @@ const Booking = () => {
                 {errors.email && <span className="booking__error">{errors.email}</span>}
               </div>
 
+              {/* Delivery Platform */}
+              <div className={`booking__field booking__field--full${errors.platform ? ' booking__field--error' : ''}`}>
+                <label className="booking__label" htmlFor="platform">{t('booking.labels.platform')}</label>
+                <select
+                  id="platform"
+                  name="platform"
+                  className="booking__input booking__select"
+                  value={form.platform}
+                  onChange={handleChange}
+                >
+                  {PLATFORM_OPTIONS.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
+                </select>
+                {errors.platform && <span className="booking__error">{errors.platform}</span>}
+              </div>
+
               {/* Start Date */}
               <div className={`booking__field${errors.startDate ? ' booking__field--error' : ''}`}>
-                <label className="booking__label" htmlFor="startDate">Start Date *</label>
+                <label className="booking__label" htmlFor="startDate">{t('booking.labels.startDate')}</label>
                 <input
                   id="startDate"
                   name="startDate"
                   type="date"
                   className="booking__input"
-                  min={getTodayMin()}
+                  min={today}
                   value={form.startDate}
                   onChange={handleChange}
                 />
@@ -198,8 +209,8 @@ const Booking = () => {
               </div>
 
               {/* Duration */}
-              <div className="booking__field">
-                <label className="booking__label" htmlFor="duration">Rental Duration *</label>
+              <div className={`booking__field${errors.duration ? ' booking__field--error' : ''}`}>
+                <label className="booking__label" htmlFor="duration">{t('booking.labels.duration')}</label>
                 <select
                   id="duration"
                   name="duration"
@@ -211,47 +222,17 @@ const Booking = () => {
                     <option key={opt.value} value={opt.value}>{opt.label}</option>
                   ))}
                 </select>
-              </div>
-
-              {/* Bike */}
-              <div className={`booking__field${errors.bike ? ' booking__field--error' : ''}`}>
-                <label className="booking__label" htmlFor="bike">Select Bike *</label>
-                <select
-                  id="bike"
-                  name="bike"
-                  className="booking__input booking__select"
-                  value={form.bike}
-                  onChange={handleChange}
-                >
-                  {BIKE_OPTIONS.map(opt => (
-                    <option key={opt.value} value={opt.value}>{opt.label}</option>
-                  ))}
-                </select>
-                {errors.bike && <span className="booking__error">{errors.bike}</span>}
-              </div>
-
-              {/* Pickup time */}
-              <div className={`booking__field${errors.pickupTime ? ' booking__field--error' : ''}`}>
-                <label className="booking__label" htmlFor="pickupTime">Pickup Time *</label>
-                <input
-                  id="pickupTime"
-                  name="pickupTime"
-                  type="time"
-                  className="booking__input"
-                  value={form.pickupTime}
-                  onChange={handleChange}
-                />
-                {errors.pickupTime && <span className="booking__error">{errors.pickupTime}</span>}
+                {errors.duration && <span className="booking__error">{errors.duration}</span>}
               </div>
 
               {/* Message */}
               <div className="booking__field booking__field--full">
-                <label className="booking__label" htmlFor="message">Additional Message</label>
+                <label className="booking__label" htmlFor="message">{t('booking.labels.message')}</label>
                 <textarea
                   id="message"
                   name="message"
                   className="booking__input booking__textarea"
-                  placeholder="Any special requests, pickup location details, or questions..."
+                  placeholder={t('booking.placeholders.message')}
                   value={form.message}
                   onChange={handleChange}
                   rows={3}
@@ -261,15 +242,13 @@ const Booking = () => {
 
             <button type="submit" className="booking__submit" disabled={submitting}>
               {submitting ? (
-                <><span className="booking__spinner" /> Processing...</>
+                <><span className="booking__spinner" /> {t('booking.submitting')}</>
               ) : (
-                <>⚡ Reserve My E-Bike</>
+                t('booking.submit')
               )}
             </button>
 
-            <p className="booking__privacy">
-              🔒 Your details are private and will never be shared with third parties.
-            </p>
+            <p className="booking__privacy">{t('booking.privacy')}</p>
           </form>
         </div>
       </div>
