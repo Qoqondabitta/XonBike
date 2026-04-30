@@ -268,7 +268,7 @@
 
 @media (max-width: 480px) {
   .wa-widget {
-    bottom: 80px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
     right: 16px;
   }
 

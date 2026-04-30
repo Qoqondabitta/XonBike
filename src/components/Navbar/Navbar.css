@@ -232,22 +232,29 @@
 /* ---- Mobile menu ---- */
 .navbar__mobile {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 999;
   flex-direction: column;
   gap: 4px;
-  padding: 12px 20px 20px;
-  border-top: 1px solid var(--border);
-  background: rgba(10, 10, 10, 0.98);
+  padding: 0 20px;
+  background: rgba(9, 9, 9, 0.99);
   backdrop-filter: blur(24px);
-  opacity: 0;
-  transform: translateY(-8px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  max-height: 0;
+  overflow: hidden;
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease, box-shadow 0.4s ease;
 }
 
 .navbar__mobile--open {
-  opacity: 1;
-  transform: translateY(0);
+  max-height: 600px;
+  padding: 14px 20px 22px;
   pointer-events: all;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .navbar__mobile-link {

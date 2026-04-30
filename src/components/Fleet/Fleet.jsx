@@ -46,11 +46,6 @@ const FleetCard = ({ bike, index }) => {
   const { t, lang } = useLang();
   const ref = useScrollAnimation({ threshold: 0.08 });
 
-  const scrollToBooking = () => {
-    const el = document.getElementById('booking');
-    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
-  };
-
   return (
     <article
       className="fleet-card fade-up"
@@ -88,9 +83,10 @@ const FleetCard = ({ bike, index }) => {
             <span className="fleet-card__price-amount">{bike.price} PLN</span>
             <span className="fleet-card__price-period">{t('fleet.perPeriod')}</span>
           </div>
-          <button className="fleet-card__btn" onClick={scrollToBooking}>
-            {t('fleet.bookBike')}
-          </button>
+          <div className="fleet-card__status" aria-label="Bike status">
+            <span className="fleet-card__status-dot" aria-hidden="true" />
+            {t('fleet.inService')}
+          </div>
         </div>
       </div>
     </article>
