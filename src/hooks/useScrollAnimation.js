@@ -26,7 +26,7 @@ const useScrollAnimation = (options = {}) => {
 
     observer.observe(element);
     return () => observer.disconnect();
-  }, []);
+  }, [options?.threshold, options?.rootMargin]);
 
   return ref;
 };

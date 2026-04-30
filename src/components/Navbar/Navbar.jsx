@@ -60,7 +60,7 @@ const Navbar = () => {
         </button>
 
         {/* Desktop links */}
-        <ul className="navbar__links" role="list">
+        <ul className="navbar__links">
           {NAV_LINKS.map(({ label, id }) => (
             <li key={id}>
               <button className="navbar__link" onClick={() => scrollTo(id)}>
