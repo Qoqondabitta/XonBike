@@ -53,7 +53,16 @@ const Navbar = () => {
 
         {/* Logo */}
         <button className="navbar__logo" onClick={() => scrollTo('hero')} aria-label="Go to top">
-          <span className="navbar__logo-icon">⚡</span>
+          <span className="navbar__logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" width="18" height="18" aria-hidden="true">
+              <circle cx="5" cy="17" r="4" stroke="white" strokeWidth="2"/>
+              <circle cx="19" cy="17" r="4" stroke="white" strokeWidth="2"/>
+              <path d="M5 17L9.5 8H15L19 17" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="10.5" y1="17" x2="12" y2="8" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
+              <line x1="8.5" y1="8" x2="14" y2="8" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+              <path d="M14 8L16 6L18 6" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </span>
           <span className="navbar__logo-text">
             <span className="navbar__logo-brand">Xon</span>Bike
           </span>

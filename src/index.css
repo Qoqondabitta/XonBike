@@ -257,58 +257,106 @@ section {
    SECTION BACKGROUND PARALLAX IMAGES
    ============================================ */
 
+.availability,
 .fleet,
+.whyus,
 .pricing,
 .booking,
 .reviews,
-.contact {
+.contact,
+.gallery,
+.faq {
   position: relative;
   isolation: isolate;
 }
 
+/* Layer 1 — background image (full opacity, z-index -2) */
+.availability::before,
 .fleet::before,
+.whyus::before,
 .pricing::before,
 .booking::before,
 .reviews::before,
-.contact::before {
+.contact::before,
+.gallery::before,
+.faq::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  pointer-events: none;
+}
+
+/* Layer 2 — dark overlay (z-index -1) */
+.availability::after,
+.fleet::after,
+.whyus::after,
+.pricing::after,
+.booking::after,
+.reviews::after,
+.contact::after,
+.gallery::after,
+.faq::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  opacity: 0.055;
+  background: rgba(10, 10, 10, 0.76);
   pointer-events: none;
 }
 
-.fleet::before {
+/* Per-section images */
+.availability::before {
   background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=60');
 }
-
-.pricing::before {
+.fleet::before {
   background-image: url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=1920&q=60');
 }
-
-.booking::before {
-  background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1920&q=60');
-}
-
-.reviews::before {
+.whyus::before {
   background-image: url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1920&q=60');
 }
-
+.pricing::before {
+  background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1920&q=60');
+}
+.booking::before {
+  background-image: url('https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=1920&q=60');
+}
+.reviews::before {
+  background-image: url('https://images.unsplash.com/photo-1576435728678-68d0fbf94946?w=1920&q=60');
+}
 .contact::before {
   background-image: url('https://images.unsplash.com/photo-1519197924294-4ba991a11128?w=1920&q=60');
 }
+.gallery::before {
+  background-image: url('https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1920&q=60');
+}
+.faq::before {
+  background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=60');
+}
 
+/* Per-section overlay fine-tuning */
+.fleet::after    { background: rgba(10, 10, 10, 0.74); }
+.pricing::after  { background: rgba(10, 10, 10, 0.74); }
+.reviews::after  { background: rgba(10, 10, 10, 0.74); }
+.gallery::after  { background: rgba(10, 10, 10, 0.68); }
+.booking::after  { background: rgba(10, 10, 10, 0.79); }
+.contact::after  { background: rgba(10, 10, 10, 0.79); }
+.faq::after      { background: rgba(10, 10, 10, 0.79); }
+
+/* Mobile: disable fixed parallax (iOS Safari bug) */
 @media (max-width: 768px) {
+  .availability::before,
   .fleet::before,
+  .whyus::before,
   .pricing::before,
   .booking::before,
   .reviews::before,
-  .contact::before {
+  .contact::before,
+  .gallery::before,
+  .faq::before {
     background-attachment: scroll;
-    opacity: 0.04;
   }
 }
