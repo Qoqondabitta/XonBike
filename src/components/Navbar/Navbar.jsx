@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from 'react';
+import { useLang } from '../../i18n/LanguageContext';
 import './Navbar.css';
 
-/* EDITABLE: Update business name here */
-const BUSINESS_NAME = { prefix: 'VOLT', suffix: 'RIDE' };
-
-const NAV_LINKS = [
-  { label: 'Home',    id: 'hero' },
-  { label: 'Bikes',   id: 'fleet' },
-  { label: 'Pricing', id: 'pricing' },
-  { label: 'Reviews', id: 'reviews' },
-  { label: 'FAQ',     id: 'faq' },
-  { label: 'Contact', id: 'contact' },
+const LANGUAGES = [
+  { code: 'en', label: 'EN' },
+  { code: 'pl', label: 'PL' },
+  { code: 'ru', label: 'RU' },
+  { code: 'uz', label: 'UZ' },
 ];
 
+const NAV_IDS = ['hero', 'fleet', 'pricing', 'reviews', 'faq', 'contact'];
+
 const Navbar = () => {
-  const [scrolled,  setScrolled]  = useState(false);
-  const [menuOpen,  setMenuOpen]  = useState(false);
+  const { t, lang, setLang } = useLang();
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const NAV_LINKS = [
+    { label: t('nav.home'),     id: 'hero' },
+    { label: t('nav.bikes'),    id: 'fleet' },
+    { label: t('nav.pricing'),  id: 'pricing' },
+    { label: t('nav.reviews'),  id: 'reviews' },
+    { label: t('nav.faq'),      id: 'faq' },
+    { label: t('nav.contact'),  id: 'contact' },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -23,7 +31,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Close menu when clicking outside
   useEffect(() => {
     if (!menuOpen) return;
     const handler = (e) => {
@@ -36,8 +43,7 @@ const Navbar = () => {
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({ top, behavior: 'smooth' });
     }
     setMenuOpen(false);
@@ -51,7 +57,7 @@ const Navbar = () => {
         <button className="navbar__logo" onClick={() => scrollTo('hero')} aria-label="Go to top">
           <span className="navbar__logo-icon">⚡</span>
           <span className="navbar__logo-text">
-            <span className="navbar__logo-brand">{BUSINESS_NAME.prefix}</span>{BUSINESS_NAME.suffix}
+            <span className="navbar__logo-brand">Xon</span>Bike
           </span>
         </button>
 
@@ -66,10 +72,27 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Desktop CTA */}
+        {/* Desktop actions */}
         <div className="navbar__actions">
+          {/* Language switcher */}
+          <div className="navbar__lang" aria-label="Language selector">
+            {LANGUAGES.map((l, i) => (
+              <React.Fragment key={l.code}>
+                {i > 0 && <span className="navbar__lang-sep">|</span>}
+                <button
+                  className={`navbar__lang-btn${lang === l.code ? ' navbar__lang-btn--active' : ''}`}
+                  onClick={() => setLang(l.code)}
+                  aria-label={`Switch to ${l.label}`}
+                  aria-pressed={lang === l.code}
+                >
+                  {l.label}
+                </button>
+              </React.Fragment>
+            ))}
+          </div>
+
           <button className="navbar__cta" onClick={() => scrollTo('booking')}>
-            ⚡ Book Now
+            {t('nav.bookNow')}
           </button>
 
           {/* Hamburger */}
@@ -91,8 +114,23 @@ const Navbar = () => {
             {label}
           </button>
         ))}
+
+        {/* Mobile language switcher */}
+        <div className="navbar__mobile-lang">
+          {LANGUAGES.map((l) => (
+            <button
+              key={l.code}
+              className={`navbar__mobile-lang-btn${lang === l.code ? ' navbar__mobile-lang-btn--active' : ''}`}
+              onClick={() => { setLang(l.code); setMenuOpen(false); }}
+              aria-pressed={lang === l.code}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
+
         <button className="navbar__mobile-cta" onClick={() => scrollTo('booking')}>
-          ⚡ Book Now
+          {t('nav.bookNow')}
         </button>
       </div>
     </nav>

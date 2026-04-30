@@ -1,4 +1,5 @@
 import React from 'react';
+import { LanguageProvider } from './i18n/LanguageContext';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import Availability from './components/Availability/Availability';
@@ -15,23 +16,25 @@ import WhatsAppWidget from './components/WhatsAppWidget/WhatsAppWidget';
 
 function App() {
   return (
-    <div className="app">
-      <Navbar />
-      <main>
-        <Hero />
-        <Availability />
-        <Fleet />
-        <WhyUs />
-        <Pricing />
-        <Booking />
-        <Reviews />
-        <FAQ />
-        <Gallery />
-        <Contact />
-      </main>
-      <Footer />
-      <WhatsAppWidget />
-    </div>
+    <LanguageProvider>
+      <div className="app">
+        <Navbar />
+        <main>
+          <Hero />
+          <Availability />
+          <Fleet />
+          <WhyUs />
+          <Pricing />
+          <Booking />
+          <Reviews />
+          <FAQ />
+          <Gallery />
+          <Contact />
+        </main>
+        <Footer />
+        <WhatsAppWidget />
+      </div>
+    </LanguageProvider>
   );
 }
 

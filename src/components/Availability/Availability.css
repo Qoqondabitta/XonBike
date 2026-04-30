@@ -111,6 +111,25 @@
   50%       { box-shadow: 0 0 12px rgba(34, 197, 94, 0.9); }
 }
 
+/* Trust card variant */
+.avail-card--trust {
+  border-color: rgba(34, 197, 94, 0.15);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.04), var(--bg-card));
+  justify-content: flex-start;
+}
+
+.avail-card--trust .avail-card__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.avail-card--trust .avail-card__icon {
+  font-size: 26px;
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.15);
+}
+
 .avail-card__toggle {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
