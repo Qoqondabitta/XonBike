@@ -1,0 +1,194 @@
+/* ============================================
+   AVAILABILITY SECTION
+   ============================================ */
+
+.availability {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.availability__header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.availability__header .section-subtitle {
+  margin: 0 auto;
+}
+
+/* ---- Bike grid ---- */
+.availability__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+/* ---- Card ---- */
+.avail-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  transition: var(--transition);
+  position: relative;
+}
+
+.avail-card--available {
+  border-color: rgba(34, 197, 94, 0.2);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.05), var(--bg-card));
+}
+
+.avail-card--rented {
+  border-color: rgba(239, 68, 68, 0.15);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.04), var(--bg-card));
+  opacity: 0.8;
+}
+
+.avail-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.avail-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-light);
+}
+
+.avail-card__body {
+  flex: 1;
+}
+
+.avail-card__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.avail-card__status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.avail-card__status--green { color: var(--accent); }
+.avail-card__status--red   { color: #ef4444; }
+
+.avail-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.avail-card__status--green .avail-card__dot {
+  background: var(--accent);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+  animation: pulseDot 2s ease infinite;
+}
+
+.avail-card__status--red .avail-card__dot {
+  background: #ef4444;
+}
+
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 6px rgba(34, 197, 94, 0.6); }
+  50%       { box-shadow: 0 0 12px rgba(34, 197, 94, 0.9); }
+}
+
+.avail-card__toggle {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  flex-shrink: 0;
+}
+
+.avail-card__toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* ---- Urgency banner ---- */
+.availability__urgency {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 20px 28px;
+  flex-wrap: wrap;
+}
+
+.availability__urgency-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.availability__urgency p {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text-secondary);
+  min-width: 200px;
+}
+
+.availability__urgency p strong {
+  color: #f59e0b;
+}
+
+.availability__urgency-btn {
+  background: var(--accent);
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.availability__urgency-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .availability__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}

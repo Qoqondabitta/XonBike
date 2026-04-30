@@ -1,0 +1,216 @@
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+
+.contact {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border);
+}
+
+.contact__header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.contact__header .section-subtitle {
+  margin: 0 auto;
+}
+
+/* ---- Grid ---- */
+.contact__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+/* ---- Card ---- */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-decoration: none;
+  position: relative;
+  transition: var(--transition);
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--c, var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: var(--shadow);
+}
+
+.contact-card:hover::before {
+  transform: scaleX(1);
+}
+
+.contact-card__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: var(--transition);
+}
+
+.contact-card:hover .contact-card__icon {
+  background: color-mix(in srgb, var(--c, var(--accent)) 10%, transparent);
+  border-color: color-mix(in srgb, var(--c, var(--accent)) 25%, transparent);
+}
+
+.contact-card__body {
+  flex: 1;
+}
+
+.contact-card__title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.contact-card__value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.contact-card__sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.contact-card__arrow {
+  font-size: 18px;
+  color: var(--text-muted);
+  transition: var(--transition);
+  align-self: flex-end;
+}
+
+.contact-card:hover .contact-card__arrow {
+  color: var(--c, var(--accent));
+  transform: translateX(4px);
+}
+
+/* ---- Map ---- */
+.contact__map {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+
+.contact__map-placeholder {
+  height: 340px;
+  background: var(--bg-card);
+  background-image:
+    radial-gradient(ellipse at 30% 50%, rgba(34, 197, 94, 0.06) 0%, transparent 60%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255, 255, 255, 0.02) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 39px,
+      rgba(255, 255, 255, 0.02) 40px
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.contact__map-overlay {
+  text-align: center;
+  padding: 24px;
+}
+
+.contact__map-pin {
+  font-size: 40px;
+  margin-bottom: 12px;
+  animation: mapBounce 2s ease infinite;
+}
+
+@keyframes mapBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.contact__map-label {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.contact__map-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.contact__map-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: #000;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 11px 22px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.contact__map-btn:hover {
+  background: var(--accent-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .contact__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+}
